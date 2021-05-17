@@ -1,5 +1,10 @@
+<%@page import="product.ProductVo"%>
+<%@page import="java.util.List"%>
+<%@page import="product.Page"%>
+<%@page import="product.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html lang='ko'>
 <head>
@@ -9,6 +14,30 @@
 <link rel='stylesheet' type='text/css' href='/WebStudy/css/product.css'>
 </head>
 <body>
+<%
+	String findStr = request.getParameter("findStr");
+	String [] gubun = new String[1];
+	int nowPage = 1;
+	
+	if(request.getParameterValues("gubun") != null){
+		gubun = request.getParameterValues("gubun");
+	}
+	
+	if(request.getParameter("nowPage") != null){
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+	}
+	
+	ProductDao dao = new ProductDao();
+	
+	Page p = new Page("all", "", 0, nowPage);
+	
+	List<ProductVo> list = dao.select(p);
+	
+	//jstl을 사용하기 위해 request에 저장
+	request.setAttribute("p", p);
+	request.setAttribute("list", list);
+
+%>
 <div id='product'>
 	<h1>제품 입출고 조회</h1>
 	<form name='frm_product' method='post' action=''>
@@ -43,38 +72,18 @@
 		</div>
 		
 		<div class='items'>
+		<c:forEach var='v' items="${list }">
 			<div class='item'>
-				<span class='no'>100</span>
-				<span class='gubun'>입고</span>
-				<span class='nal'>2021-04-17(월)</span>
-				<span class='code'>a001</span>
-				<span class='pname'>컴퓨터 본체</span>
-				<span class='ea'>1,000</span>
-				<span class='price'>1,000</span>
-				<span class='amt'>1,000,000</span>
+				<span class='no'>${v.serial }</span>
+				<span class='gubun'>${v.gubun }</span>
+				<span class='nal'>${v.nal }</span>
+				<span class='code'>${v.pCode }</span>
+				<span class='pname'>${v.pName }</span>
+				<span class='ea'>${v.ea }</span>
+				<span class='price'>${v.price }</span>
+				<span class='amt'>${v.amt }</span>
 			</div>
-
-			<div class='item'>
-				<span class='no'>100</span>
-				<span class='gubun'>입고</span>
-				<span class='nal'>2021-04-17(월)</span>
-				<span class='code'>a001</span>
-				<span class='pname'>컴퓨터 본체</span>
-				<span class='ea'>1,000</span>
-				<span class='price'>1,000</span>
-				<span class='amt'>1,000,000</span>
-			</div>
-
-			<div class='item'>
-				<span class='no'>100</span>
-				<span class='gubun'>입고</span>
-				<span class='nal'>2021-04-17(월)</span>
-				<span class='code'>a001</span>
-				<span class='pname'>컴퓨터 본체</span>
-				<span class='ea'>1,000</span>
-				<span class='price'>1,000</span>
-				<span class='amt'>1,000,000</span>
-			</div>		
+		</c:forEach>
 			
 		</div>
 
