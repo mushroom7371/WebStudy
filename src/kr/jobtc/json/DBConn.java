@@ -9,8 +9,8 @@ public class DBConn {
 	//데이터 베이스와 연동하기 위한 DBConn 클래스 선언
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
-	String user = "system";
-	String pwd = "wnsghk6670";
+	String user = "hr";
+	String pwd = "1111";
 	//데이터베이스에 접근하기 위해 필요한 정보들을 String 변수에 담았다
 	Connection conn = null;
 	//Connection 타입의 참조변수 conn을 선언하고 null 로 초기화
