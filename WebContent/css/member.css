@@ -1,0 +1,66 @@
+/*	
+-------------------------
+	게시판과 관련한 스타일
+	작성자 : 박준화
+	작성일 : 2021.04
+-------------------------
+*/
+@charset "UTF-8";
+#member{
+	width: 100%;
+	position:relative;
+	padding-right:10px;
+}
+
+#member .find_zone{
+	display:inline-block;
+	float:right;
+}
+
+
+#member .title{
+	margin-top:4px;
+	border-top : 1px solid #aaa;
+	border-bottom:1px solid #aaa;
+	background-color:#ddd;
+}
+
+#member .title>span, #member .item>span{
+	display:inline-block;
+}
+
+#member .no{width:50px;}
+#member .mid{width:100px;}
+#member .mname{width:100px;}
+#member .phone{width:200px;}
+#member .email{width:200px;}
+
+#member #btn_zone{
+	text-align:center;
+	margin-top:10px;
+	padding-top:10px;
+	border-top:2px dotted #777;
+}
+
+#member #btn_zone>input[type=button],#member #btn_zone>input[type=reset]{
+	border-radius:12px;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+#member .item:hover{
+	background-color:#999;
+}
+
+/*회원 가입 폼*/
+
+#member .photo{
+	position:absolute;
+	top:30px;
+	right:50px;
+}
+
+#member form>label{
+	display:inline-block;
+	width:80px;
+}
