@@ -49,9 +49,9 @@
 
 #product  .no{width:50px;}
 #product .gubun{width:50px;}
-#product .nal{width:120px;}
+#product .nal{width:100px;}
 #product .code{width:80px;}
-#product .pname{width:120px;}
+#product .pname{width:100px;}
 #product .ea{width:60px;}
 #product .price{width:60px;}
 #product .amt{width:90px;}
@@ -63,4 +63,8 @@
 	border-top:2px dotted #777;
 }
 
+#product .item:hover{
+	background-color : #ccc;
+	cursor : pointer;
+}
 
