@@ -11,10 +11,13 @@
 <body>
 <%
 	//기본 include 페이지
-	String border = "./board/search.jsp";
+	//String border = "./member/search.jsp";
+	String border = "./member/member.do";
 	String stock = "./product/search.jsp";
 	String gb = "./guestbook/list.jsp";
 	//읽어올 페이지의 경로를 변수에 담아 두었다.
+	
+	request.setAttribute("border", border);
 %>
 	<div id='index'>
 		<div id='login'>
@@ -32,7 +35,7 @@
 			
 			<div id='middle'>
 				<div id='border'>
-					<jsp:include page='<%=border %>'/>
+					
 				</div>
 				
 				<div id='stock'>
@@ -47,6 +50,11 @@
 		</div>
 		<%@include file="footer.jsp" %>
 	</div>
+	
+	<script>
+		$('#border').load('${border}', 'job=search');
+		//border의 영역에 servlet으로 불러온 결과를 load한다.
+	</script>
 
 </body>
 </html>
