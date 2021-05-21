@@ -62,12 +62,8 @@
 	</div>
 	
 	<img src='http://placehold.it/150x180' class='photo'/>
-	
-	<input type='hidden' name='nowPage' value='${(empty param.nowPage)? 1: param.nowPage }'/>
-	<!-- nowPage가 비어있는 값이면 1을 넣어주고 아니면 nowPage로 설정한다. -->
-	<input type='hidden' name='mid'/>
-	<!-- 목록으로 이동할때 이전 조회 화면을 보여주기 위해서 만들어두었다. -->
-	<input type='hidden' name='findStr' value='${param.findStr }'/>
+	<input type='text' name='nowPage' value='${param.nowPage }'/>
+	<input type='text' name='findStr' value='${param.findStr }'/>
 	
 	
 </form>

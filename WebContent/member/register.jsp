@@ -9,11 +9,15 @@
 <link rel='stylesheet' type='text/css' href='/WebStudy/css/member.css'>
 <script src='./lib/jquery-3.6.0.min.js'></script>
 <script src='./js/member.js'></script>
+<script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'></script>
+<!-- 우편번호를 가져오기위한 다음 api-->
 </head>
 <body>
 	<div id='member'>
-		<h1>회원정보 조회</h1>
-	<form name='frm_register' method='post' action=''>
+		<h1>회원가입</h1>
+	<form name='frm_member' id='frm_member'
+		enctype='multipart/form-data' method='post' action=''>
+	<!-- 파일 업로드를 위해 enctype을 추가함. -->
 		
 		<label>아이디</label>
 		<input type='text' name='mid' value='hong'/>
@@ -34,9 +38,10 @@
 		<br/>
 		
 		<label>주소</label>
-		<input type='text' name='post'/>
-		<input type='button' value='우편번호'/>
+		<input type='text' name='post' readonly />
+		<input type='button' name='btnZipCode' value='우편번호' onclick='funcZip()'/>
 		<br/>
+		
 		<label></label>
 		<input type='text' name='address' size='50'/>
 		<br/>
@@ -61,13 +66,12 @@
 		<input type='button' value='취소' id='btnSelect'/>
 		</div>
 		
-		<img src='http://placehold.it/150X180' class='photo'/>
+		<img src='http://placehold.it/150X180' width='150' height='180'
+		 class='photo' id='photo'/>
 		
-	<input type='hidden' name='nowPage' value='${(empty param.nowPage)? 1: param.nowPage }'/>
-	<!-- nowPage가 비어있는 값이면 1을 넣어주고 아니면 nowPage로 설정한다. -->
-	<input type='hidden' name='mid'/>
-	<!-- 목록으로 이동할때 이전 조회 화면을 보여주기 위해서 만들어두었다. -->
-	<input type='hidden' name='findStr' value='${param.findStr }'/>
+	<input type='text' name='nowPage' value='${param.nowPage }'/>
+	<input type='text' name='findStr' value='${param.findStr }'/>
+	<input type='file' name='picture' id='picture'/>
 		
 	</form>
 	</div>
@@ -81,6 +85,42 @@ function servletTest(){
 </script>
  -->
 <script>member.init();</script>
+<script>
+//우편번호 검색
+function funcZip(){
+	var frm = document.frm_member;
+		//frm의 btnZipCode 가 클릭 되었을시 함수 실행
+	new daum.Postcode({
+		oncomplete : function(data)	{
+			frm.post.value = data.zonecode;
+			frm.address.value = data.address;
+		}		
+	}).open();
+	
+}
+
+$('#photo').on('click',function(){
+	var frm = document.frm_member;
+	frm.picture.click();
+})
+
+//file tag의 내용이 변경된 경우
+var pic = document.getElementById('picture');
+
+pic.onchange = function(ev){
+	var files = ev.srcElement.files;
+	var reader = new FileReader();
+	reader.readAsDataURL(files[0]);
+	reader.onload = function(ev2){
+		var img = new Image();
+		img.src = ev2.target.result;
+
+		$('#photo')[0].src = img.src;
+	}
+}
+
+
+</script>
 <!-- member.js 파일의 member.init()를 불러온다. -->
 </body>
 </html>

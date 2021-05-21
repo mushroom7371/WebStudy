@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html lang='ko'>
 <head>
@@ -17,8 +18,10 @@
 		<form name='frm_search' method='post' action=''>
 				<input type='button' value='가입' id='btnRegister'/>
 			<div class='find_zone'>
-				<input type='search' name='findStr'/>
+				<input type='search' name='findStr' value='${param.findStr }'/>
 				<input type='button' value='검색' id='btnFind'/>	
+				<input type='text' name='nowPage' value='${param.nowPage }'/>
+				<input type='text' name='mid'/>
 			</div>
 		</form>
 		
@@ -31,29 +34,16 @@
 		</div>
 	
 		<div class='items'>
+			<c:forEach var='vo' items='${list }'>	<!-- req에 담긴 list 정보를 아래와 같은 형식으로 출력 -->
 			<div class='item' onclick='member.view()'>
 				<span class='no'>1</span>
-				<span class='mid'>Kim</span>
-				<span class='mname'>김씨</span>
-				<span class='phone'>010-1111-1111</span>
-				<span class='email'>1111@naver.com</span>
+				<span class='mid'>${vo.mid }</span>
+				<span class='mname'>${vo.irum }</span>
+				<span class='phone'>${vo.phone }</span>
+				<span class='email'>${vo.account }@${vo.host }</span>
 			</div>
-			
-			<div class='item' onclick='member.view()'>
-				<span class='no'>2</span>
-				<span class='mid'>Lee</span>
-				<span class='mname'>이씨</span>
-				<span class='phone'>010-2222-2222</span>
-				<span class='email'>2222@naver.com</span>
-			</div>
-			
-			<div class='item' onclick='member.view()'>
-				<span class='no'>3</span>
-				<span class='mid'>Park</span>
-				<span class='mname'>박씨</span>
-				<span class='phone'>010-3333-3333</span>
-				<span class='email'>3333@naver.com</span>
-			</div>
+			</c:forEach>
+
 		</div>
 		
 			<div id='btn_zone'>
@@ -65,13 +55,6 @@
 				<input type='button' value='다음'/>
 				<input type='button' value='맨끝'/>
 			</div>
-		
-	<input type='hidden' name='nowPage' value='${(empty param.nowPage)? 1: param.nowPage }'/>
-	<!-- nowPage가 비어있는 값이면 1을 넣어주고 아니면 nowPage로 설정한다. -->
-	<input type='hidden' name='mid'/>
-	<!-- 목록으로 이동할때 이전 조회 화면을 보여주기 위해서 만들어두었다. -->
-	<input type='hidden' name='findStr' value='${param.findStr }'/>
-		
 		
 	</div>
 	
