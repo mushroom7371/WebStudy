@@ -2,6 +2,7 @@ package member;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +35,9 @@ public class MemberServelt extends HttpServlet {
 		//한글로 입력시 깨짐을 방지하기 위해 설정해 두었다.
 		
 		String url = "/member/";	//공통 경로를 변수에 담아뒀다.
+		dao = new MemberDao(conn);	// conn 객체를 매개변수로 받아 MemberDao 객체를 생성하고 참조변수에 담는다.
+		Page page = new Page();	//Page 객체를 생성하여 해당 타입의 참조변수에 그 주소값을 담는다
+		
 		
 		if(req.getParameter("job") != null) {	//파라메터의 값이 null 이 아닐경우
 			job = req.getParameter("job");	//해당 파라메터 값을 job에 저장해둔다.
@@ -42,6 +46,9 @@ public class MemberServelt extends HttpServlet {
 		switch(job) {	//job 이라는 파라메터가 각각의 경우일때 해당 url에 파일.jsp를 추가하여 페이지를 불러올 수 있도록 세팅
 		case "search" :
 			url += "search.jsp";
+			List<MemberVo> list = dao.select(page);	//dao의 select(page)로 부터 전달받은 값을 List 타입의 참조변수에 주소값을 저장함. 지네릭으로 타입의 안정성을 높임
+			req.setAttribute("list", list);	//req 객체의 list 속성을 list로 설정하여줌
+			req.setAttribute("page", page);
 			break;
 		case "modify" :
 			url += "modify.jsp";
@@ -63,8 +70,8 @@ public class MemberServelt extends HttpServlet {
 			break;
 		}
 		
-		disp = req.getRequestDispatcher(url);
-		disp.include(req, resp);
+		disp = req.getRequestDispatcher(url);	// getRequestDispatcher는 a.jsp - b.jsp 로 요청을 보내거나, b.jsp로 보낸 요쳥의 결과를 a.jsp에 포함시키는 역할을 한다.
+		disp.include(req, resp);	//해당 url의 웹페이지에 req, resp의 정보를 전달해준다.
 		
 	}
 

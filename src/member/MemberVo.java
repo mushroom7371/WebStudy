@@ -9,8 +9,9 @@ public class MemberVo {
 	String post = "";
 	String address = "";
 	String address2 = "";
-	String email = "";
+	String account = "";
 	String host = "";
+	String photo = "";
 	
 	public String getMid() {
 		return mid;
@@ -54,17 +55,23 @@ public class MemberVo {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public String getEmail() {
-		return email;
+	public String getAccount() {
+		return account;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 	public String getHost() {
 		return host;
 	}
 	public void setHost(String host) {
 		this.host = host;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 }
