@@ -15,8 +15,7 @@
 <body>
 	<div id='member'>
 		<h1>회원가입</h1>
-	<form name='frm_member' id='frm_member'
-		enctype='multipart/form-data' method='post' action=''>
+	<form name='frm_member' id='frm_member' method='post' action=''>
 	<!-- 파일 업로드를 위해 enctype을 추가함. -->
 		
 		<label>아이디</label>

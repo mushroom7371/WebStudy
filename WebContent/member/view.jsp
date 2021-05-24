@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html lang='ko'>
 <head>
@@ -11,42 +12,36 @@
 <script src='./js/member.js'></script>
 </head>
 <body>
-	<div id='member'>
+<div id='member'>
 		<h1>회원정보 상세보기</h1>
-	<form name='frm_register' method='post' action=''>
+	<form name='frm_member' id='frm_member' method='post' action=''>
 		
 		<label>아이디</label>
-		<input type='text' name='mid' value='hong'/>
+		<input type='text' name='mid' value='${vo.mid }'/>
 		<br/>
 		
 		<label>성명</label>
-		<input type='text' name='irum' value='길동이'/>
+		<input type='text' name='irum' value='${vo.irum }'/>
 		<br/>
-		
-		<label>암호</label>
-		<input type='password' name='pwd'/>	<!-- name이 같으면 배열로 처리됨 -->
-		<output>확인</output>
-		<input type='password' name='pwd'/>
-		<br/>
-		
+
 		<label>연락처</label>
-		<input type='text' name='phone' value='010-1111-1111'>
+		<input type='text' name='phone' value='${vo.phone }'>
 		<br/>
 		
 		<label>주소</label>
-		<input type='text' name='post'/>
-		<input type='button' value='우편번호'/>
+		<input type='text' name='post' value='${vo.post }'/>
+
 		<br/>
 		<label></label>
-		<input type='text' name='address' size='50'/>
+		<input type='text' name='address' size='50' value='${vo.address }'/>
 		<br/>
 		
 		<label>상세주소</label>
-		<input type='text' name='address2' size='50'/>
+		<input type='text' name='address2' size='50' value='${vo.address2 }'/>
 		<br/>
 		
 		<label>이메일</label>
-		<input type='text' name='account'/>
+		<input type='text' name='account' value='${vo.account }'/>
 		<output>@</output>
 		<select name='host' size='1'>
 			<option value='IT여행자'>IT여행자</option>
@@ -62,15 +57,36 @@
 		<input type='button' value='취소' id='btnSelect'/>
 		</div>
 		
-		<img src='http://placehold.it/150X180' class='photo'/>
+		<c:choose>
+			<c:when test="${vo.photo eq null }">
+				<img src='http://placehold.it/150X180' class='photo'/>
+			</c:when>
+			
+			<c:when test="${vo.photo ne null }">
+				<img src='./member/picture/${vo.photo}' class='photo' width='150px' height='180px' />
+			</c:when>
+		</c:choose>
 		
 		<input type='text' name='nowPage' value='${param.nowPage }'/>
 		<input type='text' name='findStr' value='${param.findStr }'/>
-		
+		<input type='hidden' name='pwd'/>
 		
 	</form>
-	</div>
-<script>member.init();</script>
+		<!-- 삭제버튼 클릭시 확인창이 나타나도록 하는 영역 설정 -->
+		<div id='passwordZone'>
+			<div id='textZone'>
+				<label>삭제하시려면 암호를 입력해 주세요.</label>		
+				<input type='password' id='pwd'/>
+				<input type='button' value='확인' id='btnDeleteR'/>
+				<input type='button' value='취소' id='btnCancel'/>	
+			</div>		
+		</div>
+</div>
+<script>
+member.init();
+member.checkHost('${vo.host}');
+
+</script>
 <!-- member.js 파일의 member.init()를 불러온다. -->
 </body>
 </html>
