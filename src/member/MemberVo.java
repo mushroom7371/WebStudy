@@ -12,6 +12,14 @@ public class MemberVo {
 	String account = "";
 	String host = "";
 	String photo = "";
+	int rno;
+	
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
 	
 	public String getMid() {
 		return mid;

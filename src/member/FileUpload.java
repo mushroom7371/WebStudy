@@ -32,7 +32,7 @@ public class FileUpload extends HttpServlet{
 	RequestDispatcher disp;
 
 
-	String saveDir = "C:\\eclipse\\workspace\\WebStudy\\WebContent\\member\\picture\\";
+	final static String saveDir = "C:\\eclipse\\workspace\\WebStudy\\WebContent\\member\\picture\\";
 	//저장 경로 설정
 
 	public void init() throws ServletException{	//서블렛이 실행될때 최초 한번 실행됨.
@@ -42,6 +42,9 @@ public class FileUpload extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int r = 0;
+		String flag = "";
+		
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html;charset=utf-8");
 		//한글 깨짐 방지 설정
@@ -84,7 +87,7 @@ public class FileUpload extends HttpServlet{
 				//out.print("<li>part value : " + req.getParameter(p.getName()));
 				//p.getName()을 매개변수로 하여 파라메터값으로 가져오는데 이는 value를 의미한다.
 				String tagName = p.getName();
-				String value = req.getParameter(tagName);
+				String value = req.getParameter(tagName).trim();
 				switch(tagName) {
 				case "mid" :
 					vo.setMid(value);
@@ -123,8 +126,15 @@ public class FileUpload extends HttpServlet{
 				}
 			}//end of if
 		}//end of for
-			
-		int r = dao.insert(vo);
+		
+		flag = req.getParameter("flag");
+		
+		if(flag.equals("insert")) {
+			r = dao.insert(vo);
+		}else if(flag.equals("update")) {
+			r = dao.update(vo);
+		}
+	
 		
 		req.setAttribute("page", page);
 		
