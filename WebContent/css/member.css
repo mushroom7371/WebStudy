@@ -8,8 +8,9 @@
 @charset "UTF-8";
 #member{
 	width: 100%;
+	min-height :400px;
 	position:relative;
-	padding-right:10px;
+
 }
 
 #member .find_zone{
@@ -68,3 +69,27 @@
 #member #picture{
 	display : none;
 }
+
+/* 수정이나 삭제시 암호 입력*/
+#member #passwordZone{
+	position : absolute;
+	top : 0;
+	left : 0;
+	background-color : #0009;
+	width : 100%;
+	height : 100%;
+	display : none;
+}
+
+#member #textZone{
+	width : 350px;
+	height : 120px;
+	margin : 70px auto;
+	background-color : #eee;
+}
+
+
+
+
+
+
