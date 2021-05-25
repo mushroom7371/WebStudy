@@ -43,7 +43,7 @@
 		<label>이메일</label>
 		<input type='text' name='account' value='${vo.account }'/>
 		<output>@</output>
-		<select name='host' size='1'>
+		<select name='host'>
 			<option value='IT여행자'>IT여행자</option>
 			<option value='acorn'>acorn</option>
 			<option value='네이버'>네이버</option>

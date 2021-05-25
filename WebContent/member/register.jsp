@@ -50,9 +50,10 @@
 		<br/>
 		
 		<label>이메일</label>
-		<input type='text' name='email'/>
+		<input type='text' name='account'/>
+		
 		<output>@</output>
-		<select name='host' size='1'>
+		<select name='host'>
 			<option value='IT여행자'>IT여행자</option>
 			<option value='acorn'>acorn</option>
 			<option value='네이버'>네이버</option>
@@ -84,42 +85,7 @@ function servletTest(){
 </script>
  -->
 <script>member.init();</script>
-<script>
-//우편번호 검색
-function funcZip(){
-	var frm = document.frm_member;
-		//frm의 btnZipCode 가 클릭 되었을시 함수 실행
-	new daum.Postcode({
-		oncomplete : function(data)	{
-			frm.post.value = data.zonecode;
-			frm.address.value = data.address;
-		}		
-	}).open();
-	
-}
 
-$('#photo').on('click',function(){
-	var frm = document.frm_member;
-	frm.picture.click();
-})
-
-//file tag의 내용이 변경된 경우
-var pic = document.getElementById('picture');
-
-pic.onchange = function(ev){
-	var files = ev.srcElement.files;
-	var reader = new FileReader();
-	reader.readAsDataURL(files[0]);
-	reader.onload = function(ev2){
-		var img = new Image();
-		img.src = ev2.target.result;
-
-		$('#photo')[0].src = img.src;
-	}
-}
-
-
-</script>
 <!-- member.js 파일의 member.init()를 불러온다. -->
 </body>
 </html>

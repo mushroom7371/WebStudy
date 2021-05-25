@@ -15,7 +15,7 @@
 <body>
 <div id='member'>
 <h1>회원정보 수정</h1>
-<form name='frm_member' method='post' action=''>
+<form name='frm_member' id='frm_member' method='post' action=''>
 	
 	<label>아이디</label>
 	<input type='text' name='mid' value='${vo.mid }'/>
@@ -44,7 +44,7 @@
 	<label>이메일</label>
 	<input type='text' name='account' value='${vo.account }'/>
 	<output>@</output>
-	<select name='host' size='1'>
+	<select name='host'>
 		<option value='IT여행자'>IT여행자</option>
 		<option value='acorn'>acorn</option>
 		<option value='네이버'>네이버</option>
@@ -62,15 +62,13 @@
 			<img src='http://placehold.it/150X180' width='150px' height='180px'
 			 class='photo' id='photo'/>
 		</c:when>
-			
+
 		<c:when test="${vo.photo ne null }">
 			<img src='./member/picture/${vo.photo}' class='photo' id='photo'
 			width='150px' height='180px' />
 		</c:when>
 	</c:choose>
-	
-	<img src='http://placehold.it/150x180' class='photo'
-		id='photo' width='150px' height='180px'/>
+		
 	<input type='text' name='nowPage' value='${param.nowPage }'/>
 	<input type='text' name='findStr' value='${param.findStr }'/>
 	<input type='file' name='picture' id='picture'/>
