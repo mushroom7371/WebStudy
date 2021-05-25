@@ -67,14 +67,14 @@ ${hap }
 	GuestBookVo v1 = new GuestBookVo();
 	v1.setSerial(1);
 	v1.setMid("hong");
-	v1.setNal(new Date());
+	v1.setNal("");
 	v1.setDoc("하이하이~");
 	v1.setBgcolor("#ff0000");
 	
 	GuestBookVo v2 = new GuestBookVo();
 	v2.setSerial(2);
 	v2.setMid("kim");
-	v2.setNal(new Date());
+	v2.setNal("");
 	v2.setDoc("안녕~");
 	v2.setBgcolor("#00ff00");
 	
