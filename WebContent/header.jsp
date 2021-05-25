@@ -3,10 +3,11 @@
 
 	<header id='header'>
 		<nav id='main_menu'>
-			<a href='#'>메뉴1</a>
-			<a href='#'>메뉴2</a>
-			<a href='#'>메뉴3</a>
-			<a href='#'>메뉴4</a>
-			<a href='#'>메뉴5</a>
+			<a href='index.jsp'>HOME</a>
+			
+				<span onclick="main.menu('member')">회원관리</span>
+				<span onclick="main.menu('board')">게시판</span>
+				<span onclick="main.menu('3')">메뉴3</span>
+				<span onclick="main.menu('4')">메뉴4</span>
 		</nav>
 	</header>

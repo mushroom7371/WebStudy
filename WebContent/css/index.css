@@ -28,6 +28,11 @@
 	
 }
 
+#index #main_menu> span:hover{
+	cursor : pointer;
+	color : #f00;
+}
+
 #index div{
 	border:0px solid #ccccff;
 }
