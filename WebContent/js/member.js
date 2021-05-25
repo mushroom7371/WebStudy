@@ -22,7 +22,7 @@ member.init = function(){	//member.init을 호출하면 함수가 실행된다.
 		$.ajax({	//ajax 형식으로 각 데이터를 전달한다.
 			type	: 'POST',
 			enctype	: 'multipart/form-data',
-			url		: './upload.do?falg=insert',
+			url		: './upload.do?flag=insert',
 			data	: data,
 			processData	: false,	//새로 공부를 해야됨 파일 전달과 관련?
 			contentType	: false,
@@ -104,7 +104,7 @@ member.init = function(){	//member.init을 호출하면 함수가 실행된다.
 			contentType	: false,
 			processData	: false,
 			success	: function(resp){
-				$('#border').load('./member.do', 'job=search');
+				$('#border').load('./member/member.do', 'job=search');
 			}
 		});
 	})
@@ -177,20 +177,24 @@ function funcZip(){
 	
 }
 
-//file tag의 내용이 변경된 경우
+	// file tag의 내용이 변경된 경우
 	var pic = $('#picture')[0];
-	if(pic !=null){
-	pic.onchange = function(ev){
-		var files = ev.srcElement.files;
-		var reader = new FileReader();
-		reader.readAsDataURL(files[0]);
-		reader.onload = function(ev2){
-			var img = new Image();
-			img.src = ev2.target.result;
-			$('#photo')[0].src = img.src;
+	if(pic != null){
+		pic.onchange = function(ev){
+			var files = ev.srcElement.files;
+			var reader = new FileReader();
+			reader.readAsDataURL(files[0]);
+			reader.onload = function(ev2){
+				var img = new Image();
+				img.src = ev2.target.result;
+				$('#photo')[0].src = img.src;
+			}
 		}
 	}
-}
+	
+
+
+
 
 
 
