@@ -8,7 +8,7 @@ main.init = function(){
 	
 }
 
-main.menu = function(){
+main.menu = function(menu){
 	switch(menu){
 		case 'member'	:
 			$('#border').load('./member/member.do');
