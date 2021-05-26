@@ -40,5 +40,73 @@
 		values (seq_product.nextval, #{gubun}, sysdate, #{pCode}, #{pName}, #{ea},
 				#{price}, #{amt}, #{mid}  )
 	</insert>
-
+	
+	<update id="product_update" parameterType="product.ProductVo">
+		update product set ea=#{ea}, price=#{price}, amt=ea*price where serial = #{serial}
+	</update>
+	
+	<delete id="product_delete" parameterType="Integer">
+		delete from product where serial=#{serial}	
+	</delete>
+	
+	<!-- 입력된 mid가 null 이 아닌 경우에만 where 조건이 실행되도록 조치 -->
+	<select id="if_test" parameterType="String" resultType="member.MemberVo">
+		select * from member
+		<if test="_parameter != null">
+			where mid = #{_parameter}
+		</if>
+	</select>
+	
+	<select id="emp_list" parameterType="Integer" resultMap="emp_map">
+		select first_name from employees
+			<where>
+				<if test="_parameter == 1">
+					to_char(hire_date, 'mm') = '01'
+					or to_char(hire_date, 'mm') = '02'
+					or to_char(hire_date, 'mm') = '03'
+				</if>
+				
+				<if test="_parameter == 2">
+					to_char(hire_date, 'mm') = '04'
+					or to_char(hire_date, 'mm') = '05'
+					or to_char(hire_date, 'mm') = '06'
+				</if>
+				
+				<if test="_parameter == 3">
+					to_char(hire_date, 'mm') = '07'
+					or to_char(hire_date, 'mm') = '08'
+					or to_char(hire_date, 'mm') = '09'
+				</if>
+				
+				<if test="_parameter == 4">
+					to_char(hire_date, 'mm') = '10'
+					or to_char(hire_date, 'mm') = '11'
+					or to_char(hire_date, 'mm') = '12'
+				</if>
+							
+			</where>
+			
+	</select>
+	<!-- find Str 전달된 경우 #{}에는 자동으로 좌우에 작은따옴표''가 붙는다 ${}는 따옴표가 없음 -->
+	<select id="emp_find" parameterType="String" resultMap="emp_map">
+		select * from employees
+			<where>
+				<if test="_parameter != null">
+					first_name like '%${_parameter}%'
+				</if>
+			</where>
+	</select>
+		
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
