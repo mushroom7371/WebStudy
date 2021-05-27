@@ -50,7 +50,8 @@
 }
 
 #member .item:hover{
-	background-color:#999;
+	background-color : #ccc;
+	cursor : pointer;
 }
 
 /*회원 가입 폼*/

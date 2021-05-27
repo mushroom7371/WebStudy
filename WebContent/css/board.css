@@ -16,6 +16,7 @@
 	margin-top:20px;
 }
 
+
 #board #btn_zone{
 	text-align: center;
 	margin-top:10px;
@@ -30,7 +31,7 @@
 	text-align:left;
 }
 #board form>textarea{
-	width:400px;
+	width:600px;
 	height:300px;
 	margin-top:3px;
 }
@@ -39,7 +40,7 @@
 	width:314px;
 }
 
-#board #btn_zone>input[type=button]{
+#board #btn_zone>input[type=button], input[type=reset] {
 	border-radius:12px;
 	padding-left:5px;
 	padding-right:5px;
@@ -64,6 +65,11 @@
 	display:inline-block;
 }
 
+#board .item:hover{
+	background-color : #ccc;
+	cursor : pointer;
+}
+
 #board .title>.no, #board .item>.no{ width:60px;}
 #board .title>.subject, #board .item>.subject{ width:250px;}
 #board .title>.date, #board .item>.date{ width:150px;}
@@ -71,7 +77,38 @@
 #board .title>.hit, #board .item>.hit{ width:50px;}
 
 
-
+#board #image_preview #attzone{
+	width:100%;
+	height:160px;
+	padding:0;
+	border:2px dotted #aaa;
+	background-color:rgba(255,255,255,.2);
+}
+	
+#board #image_preview #attzone .item{
+	width:130px;
+	height:150px;
+	margin:5px;
+	position:relative;
+	display:inline-block;
+}
+	
+#board #attzone .del_btn{
+	position:absolute;
+	font-size:24pt;
+	color:#ff0000;
+	right:3px;
+	bottom:3px;
+	background-color:rgba(255,255,255,.2);
+	padding:0;
+	border-width:0;
+	cursor:pointer;
+	}
+	
+#board #attzone img{
+	width:100%;
+	height:100%;
+}
 
 
 
