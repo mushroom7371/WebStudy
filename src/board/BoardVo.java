@@ -4,12 +4,19 @@ public class BoardVo {
 	int serial;
 	int pSerial;
 	int hit;
+	int attCnt;
 	String subject = "";
 	String doc = "";
 	String mid = "";
 	String pwd = "";
 	String mdate = "";
 	
+	public int getAttCnt() {
+		return attCnt;
+	}
+	public void setAttCnt(int attCnt) {
+		this.attCnt = attCnt;
+	}
 	public int getSerial() {
 		return serial;
 	}

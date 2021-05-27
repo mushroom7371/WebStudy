@@ -17,7 +17,7 @@ import kr.jobtc.json.DBConn;
 public class MemberServlet extends HttpServlet {
 	Connection conn;	//데이터베이스와 연결하기위해 선언한 Connection 타입의 참조변수
 	MemberDao dao;	//MemberDao 의 기능들을 사용하기 위해 미리 참조변수를 선언함.
-	RequestDispatcher disp; //요청결과를 forward 할때 사용됨.
+	RequestDispatcher disp; //요청결과를 include 할때 사용됨.
 	String job="search";	//멤버의 search 게시판을 기본으로 사용하기 위해 선언
 	
 	@Override

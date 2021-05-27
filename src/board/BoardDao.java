@@ -1,5 +1,7 @@
 package board;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import mybatis.MybaFactory;
@@ -22,8 +24,25 @@ public class BoardDao {
 		}
 	}
 	
+	public List<BoardVo> select(Page page){
+		List<BoardVo> list = null;
+		
+		try{
+			int totList = sqlSession.selectOne("board.totList", page.getFindStr());
+			page.setTotList(totList);
+			page.compute();
+			list = sqlSession.selectList("board.search", page);
+			sqlSession.close();
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	
 	public static void main(String[] args) {
-		new BoardDao();	//생성자로 인하여 메인 메서드가 실행될때 sqlSession이 생성됨
+		new BoardDao();	//메서드가 실행될때 sqlSession이 생성됨
 	}
 }
