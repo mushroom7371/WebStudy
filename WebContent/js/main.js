@@ -15,7 +15,7 @@ main.menu = function(menu){
 			break;
 		
 		case 'board'	:
-			$('#border').load('./board/search.jsp');
+			$('#border').load('./board.do');
 			break;
 	}
 }

@@ -14,7 +14,7 @@
 <%
 	//기본 include 페이지
 	//String border = "./member/search.jsp";
-	String border = "./member/member.do";
+	String border = "./board.do";
 	String stock = "./product/search.jsp";
 	String gb = "./guestbook/list.jsp";
 	//읽어올 페이지의 경로를 변수에 담아 두었다.

@@ -33,11 +33,12 @@
 			 rows='10' cols='30' 이걸로 조정할수도있으나 CSS로 건드림
 			html 태그를 인식하지 않는다 => 일반 text로 인식함 -->
 		<br/>
+			<label>파일첨부</label>
+			<input type='file' id='attfile' multiple/>
 		
 		<div id='image_preview'>
-			<label>이미지첨부</label>
-			<input type='file' id='attfile' multiple/>
-		<div id='attzone'></div>
+			<div id='attzone'>
+		</div>
 		<!-- multiple은 파일 다중 선택 html5에서 추가됨. -->
 		
 		<label>암호</label>

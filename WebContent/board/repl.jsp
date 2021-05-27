@@ -31,10 +31,12 @@
 
 		<br/>
 		
-		<div id='image_preview'>
-			<label>이미지첨부</label>
+			<label>파일첨부</label>
 			<input type='file' id='attfile' multiple/>
-		<div id='attzone'></div>
+		
+		<div id='image_preview'>
+			<div id='attzone'>
+		</div>
 		<!-- multiple은 파일 다중 선택 html5에서 추가됨. -->
 		
 		<label>암호</label>
