@@ -18,7 +18,7 @@ import javax.servlet.http.Part;
 
 @WebServlet(urlPatterns = "/boardUpload.do")
 @MultipartConfig(
-		location= "c:/temp/",
+		location= "c:/Temp/",
 		maxFileSize = 1024*1024*100,
 		maxRequestSize = -1,
 		fileSizeThreshold = -1
@@ -56,6 +56,7 @@ public class BoardFileUpload extends HttpServlet {
 		for(Part p : parts) {
 			if( p.getHeader("Content-Disposition").contains("filename=")) { // file tag
 				String fileName = p.getSubmittedFileName();
+				System.out.println(fileName);
 				BoardAttVo attVo = new BoardAttVo();
 				attVo.setOriAtt(fileName);
 				

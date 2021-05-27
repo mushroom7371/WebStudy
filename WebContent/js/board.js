@@ -41,6 +41,7 @@ brd.init = function(){
 			contentType : false,
 			processData : false,
 			success : function(resp){
+				alert("성공!~");
 				$('#board').load('./board.do');
 			}
 		})
