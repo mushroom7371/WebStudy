@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>게시판 입력</title>
+<title>상세보기</title>
 <script src='./lib/jquery-3.6.0.min.js'></script>
 <script src='./js/board.js'></script>
 <script src='./js/image_preview.js'></script>
@@ -15,10 +15,8 @@
 <body>
 <div id='board'>
 
-	<h1>게시판 입력</h1>
+	<h1>상세보기</h1>
 	<form name='frm_board' id='frm_board' method='post' action=''>
-	<!-- method는 get과 post 가 있는데 이 둘의 차이는?
-		action은 서버를 만들 수 있는 페이지? -->
 		
 		<label>작성자</label>
 		<input type='text' name='mid' value='juna' />
@@ -29,9 +27,6 @@
 		<br/>
 		
 		<textarea name='doc'></textarea>
-		<!-- textarea는 2칸이상의 공백, 엔터키를 인식함
-			 rows='10' cols='30' 이걸로 조정할수도있으나 CSS로 건드림
-			html 태그를 인식하지 않는다 => 일반 text로 인식함 -->
 		<br/>
 		
 		<div id='image_preview'>
@@ -45,19 +40,14 @@
 		<br/>
 		
 		<div id='btn_zone'>
-			<input type='button' value='작성' id='btnInsertR'>
+			<input type='button' value='수정' id='btnModify'/>
 			<input type='button' value='취소' id='btnSearch'/>
-		<!-- reset은 모두 삭제가 아니라 초기값으로 설정해준다. -->
 		</div>
 		
 		<input type='text' name='nowPage' value='${param.nowPage }'/>
 		<input type='text' name='findStr' value='${param.findStr }'/>
 		<input type='text' name='serial' value='${param.serial }'/>
 		
-		
-
-
-</div>
 	</form>
 </div>
 <script>
