@@ -111,6 +111,23 @@
 }
 
 
+#board #brdPasswordZone{
+	position : absolute;
+	top : 0;
+	left : 0;
+	background-color : #0009;
+	width : 100%;
+	height : 100%;
+	display : none;
+}
+
+#board #textZone{
+	width : 350px;
+	height : 120px;
+	margin : 70px auto;
+	background-color : #eee;
+}
+
 
 
 

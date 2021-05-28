@@ -7,8 +7,12 @@ var brd = {};	//리터럴 생성
 brd.init = function(){
 	$('#board #btnSearch').on('click', function(){
 		var frm = $('#frm_board')[0];
+		
+		if(frm.serial.value =='') frm.serial.value = 0;
+		if(frm.nowPage.value == '') frm.nowPage.value = '1';
+		
 		var param = $(frm).serialize();
-		$('#board').load('./board.do', param);
+		$('#board').load('./board.do?job=search', param);
 	})
 	
 	$('#board #btnFind').on('click', function(){
@@ -30,6 +34,7 @@ brd.init = function(){
 		//내용 입력폼과 파일 업로드 폼이 분리되지 않아서 필요함
 		if(frm.findStr.value == '') frm.findStr.value = ' ';
 		if(frm.serial.value =='') frm.serial.value = 0;
+		if(frm.nowPage.value == '') frm.nowPage.value = '1';x
 		
 		var data = new FormData(frm);
 		
@@ -38,8 +43,8 @@ brd.init = function(){
 			url : './boardUpload.do?flag=insert',
 			enctype : 'multipart/form-data',
 			data : data,
-			contentType : false,
-			processData : false,
+			contentType : false,	//form 태그의 정보를 text가 아닌 bianary로 전달하라는 의미
+			processData : false,	//form 태그의 정보를 text가 아닌 bianary로 전달하라는 의미
 			success : function(resp){
 				alert("성공!~");
 				$('#board').load('./board.do');
@@ -65,13 +70,39 @@ brd.init = function(){
 		var param = $(frm).serialize();
 		$('#board').load('./board/repl.jsp', param);
 	})
+	
+	$('#btnDeleteR').on('click', function(){
+		var pwd = $('#brdPasswordZone #pwd').val();
+		var frm = $('#frm_frm')[0];
+		frm.pwd.value = pwd;		
+		var param = $('#frm_frm').serialize();
+		
+		$('#border').load(url + 'deleteR', param, function(){
+			$('#brdPasswordZone').css({
+			'display' : 'none'
+			})
+		});
+	})
+	
+	$('#btnDelete').on('click', function(){
+		$('#brdPasswordZone').css({
+			'display' : 'block'
+		})
+	})
+	
+	$('#btnCancel').on('click', function(){
+		$('#brdPasswordZone').css({
+			'display' : 'none'
+		})
+	})
 		
 }
 
 brd.view = function(serial){
 	var frm = $('#frm_board')[0];
+	frm.serial.value = serial;
 	var param = $(frm).serialize();
-	$('#board').load('./board/view.jsp', param);
+	$('#board').load('./board.do?job=view', param);
 }
 
 
