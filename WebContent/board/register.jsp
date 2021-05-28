@@ -34,7 +34,7 @@
 			html 태그를 인식하지 않는다 => 일반 text로 인식함 -->
 		<br/>
 			<label>파일첨부</label>
-			<input type='file' name='fileName' id='attfile' multiple/>
+			<input type='file' name='attfile' id='attfile' multiple/>
 		
 		<div id='image_preview'>
 			<div id='attzone'>

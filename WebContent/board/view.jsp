@@ -19,30 +19,29 @@
 	<form name='frm_board' id='frm_board' method='post' action=''>
 		
 		<label>작성자</label>
-		<input type='text' name='mid' value='juna' />
+		<input type='text' name='mid' value='${vo.mid }' />
 		<br/>
 		
 		<label>제목</label>
-		<input type='text' name='subject' value='hi~' />
+		<input type='text' name='subject' value='${vo.subject }' />
 		<br/>
 		
-		<textarea name='doc'></textarea>
+		<textarea name='doc'>${vo.doc }</textarea>
 		<br/>
-		
-			<label>파일첨부</label>
-			<input type='file' id='attfile' multiple/>
-		
+
 		<div id='image_preview'>
-			<div id='attzone'>
+			<c:forEach var='f' items="${vo.attList}">
+				<a href='upload/${f.sysAtt }' download='${f.oriAtt }''>
+					<img src='./upload/${f.sysAtt }' width='150px' height='180px'/>
+				</a>
+			</c:forEach>
 		</div>
 		<!-- multiple은 파일 다중 선택 html5에서 추가됨. -->
-		
-		<label>암호</label>
-		<input type='password' name='pwd' />
-		<br/>
-		
+
 		<div id='btn_zone'>
 			<input type='button' value='수정' id='btnModify'/>
+			<input type='button' value='삭제' id='btnDelete'/>
+			<input type='button' value='답글' id='btnRepl'/>
 			<input type='button' value='취소' id='btnSearch'/>
 		</div>
 		
@@ -50,7 +49,17 @@
 		<input type='text' name='findStr' value='${param.findStr }'/>
 		<input type='text' name='serial' value='${param.serial }'/>
 		
+		<input type='password' name='pwd' />
 	</form>
+	
+		<div id='brdPasswordZone'>
+			<div id='textZone'>
+				<label>삭제하시려면 암호를 입력해 주세요.</label>		
+				<input type='password' id='pwd'/>
+				<input type='button' value='확인' id='btnDeleteR'/>
+				<input type='button' value='취소' id='btnCancel'/>	
+			</div>		
+		</div>
 </div>
 <script>
 brd.init();
