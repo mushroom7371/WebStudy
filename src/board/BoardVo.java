@@ -1,5 +1,7 @@
 package board;
 
+import java.util.List;
+
 public class BoardVo {
 	int serial;
 	int pSerial;
@@ -11,6 +13,21 @@ public class BoardVo {
 	String pwd = "";
 	String mdate = "";
 	
+	List<BoardAttVo> attList;	//첨부 파일 목록
+	List<BoardAttVo> delList;	//삭제 파일 목록
+	
+	public List<BoardAttVo> getAttList() {
+		return attList;
+	}
+	public void setAttList(List<BoardAttVo> attList) {
+		this.attList = attList;
+	}
+	public List<BoardAttVo> getDelList() {
+		return delList;
+	}
+	public void setDelList(List<BoardAttVo> delList) {
+		this.delList = delList;
+	}
 	public int getAttCnt() {
 		return attCnt;
 	}

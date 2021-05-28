@@ -1,5 +1,6 @@
 package board;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,6 +41,113 @@ public class BoardDao {
 		
 		return list;
 	}
+	
+	public String insert(BoardVo vo){
+		String msg = "ok..";
+		try {
+			int serial = sqlSession.selectOne("board.brd_getSerial");	//serial 번호를 가져옴
+			vo.setSerial(serial);
+			int r = sqlSession.insert("board.brd_insert", vo);	//xml의 insert 쿼리를 실행하는데 vo 를 가지고 실행한 결과를 r에 저장
+			if(r > 0) {
+				int chkCnt = 0; //첨부파일의 수 만큼 실행될 쿼리의 수
+				for(BoardAttVo v : vo.getAttList()) {	//vo.getAttList()로 값을 가지고 와서 반복시행
+					v.setpSerial(serial);
+					chkCnt += sqlSession.insert("board.brdAtt_insert", v);
+				}
+				if(chkCnt == vo.getAttList().size()) {
+					sqlSession.commit();
+				}else {
+					throw new Exception(); //오류발생시 catch 문장으로 넘김
+				}
+			}else {
+				throw new Exception();
+			}
+			
+			
+		}catch(Exception ex) {
+			msg = ex.toString();
+			ex.printStackTrace();
+			sqlSession.rollback(); //오류 발생시 롤백
+			
+			for(BoardAttVo delVo : vo.getAttList()) {
+				File f = new File(BoardFileUpload.saveDir + delVo.getSysAtt());
+				if(f.exists()) f.delete();
+			}
+			
+		}
+		sqlSession.close();
+		return msg;
+	}
+	
+	public String update(BoardVo vo){
+		String msg = "ok..";
+		try {
+			
+		}catch(Exception ex) {
+			msg = ex.toString();
+			ex.printStackTrace();
+		}finally {
+			sqlSession.close();
+			return msg;
+		}
+	}
+	
+	public String repl(BoardVo vo){
+		String msg = "ok..";
+		try {
+			
+		}catch(Exception ex) {
+			msg = ex.toString();
+			ex.printStackTrace();
+		}
+			sqlSession.close();
+			return msg;
+		
+	}
+	
+	public BoardVo view(int serial) {
+		BoardVo vo = new BoardVo();
+		
+		try {
+			sqlSession.update("board.brd_hitUp", serial);
+			sqlSession.commit();
+			
+			vo = sqlSession.selectOne("board.brd_view", serial);
+			List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
+			
+			vo.setAttList(attList);
+						
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		sqlSession.close();
+		return vo;
+	}
+	
+	public void delete(BoardVo vo){
+		BoardVo vo = new BoardVo();
+		vo = sqlSession.selectOne("board.brd_view", serial);
+		
+		
+		List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
+		
+		
+		try {
+			
+			if(r > 0) {
+				
+			}else {
+				
+			}
+			
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+			sqlSession.close();
+	}
+	
+	
 	
 	
 	public static void main(String[] args) {

@@ -36,6 +36,7 @@ public class BoardServlet extends HttpServlet {
 		String url = "./board/";	//공통 경로를 변수에 담아뒀다.
 		dao = new BoardDao();	// BoardDao 객체를 생성하고 참조변수에 담는다.
 		
+		int serial = 0;
 		Page page = new Page();	//Page 객체를 생성하여 해당 타입의 참조변수에 그 주소값을 담는다
 		String tempNowPage = req.getParameter("nowPage");
 		
@@ -53,16 +54,40 @@ public class BoardServlet extends HttpServlet {
 			page.setNowPage(Integer.parseInt(tempNowPage)); //공백이 아닐 시 그 데이터를 정수로 바꿔 해당 페이지로 이동
 		}
 		
+		if(req.getParameter("serial") != null) {
+			serial = Integer.parseInt(req.getParameter("serial"));
+		}
+		
 		switch(job) {
 		case "search"	:
 			url += "search.jsp";
 			List<BoardVo> list = dao.select(page);
 			
 			req.setAttribute("list", list);
-			req.setAttribute("page", page);
 			break;
+			
+		case "view"		:
+			url += "view.jsp";
+			vo = dao.view(serial);
+			
+			req.setAttribute("vo", vo);
+			break;
+			
+		case "delete"	:
+			url += "search.jsp";
+			vo = new BoardVo();
+			vo.setSerial(serial);
+			vo.setMid(req.getParameter("mid"));
+			vo.setPwd(req.getParameter("pwd"));
+			dao.delete(vo);
+			
+			list = dao.select(page);
+			req.setAttribute("list", list);
+			break;
+			
 		}
-		
+
+		req.setAttribute("page", page);
 		rd = req.getRequestDispatcher(url);
 		rd.include(req, resp);
 		
