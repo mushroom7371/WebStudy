@@ -114,6 +114,7 @@ public class BoardDao {
 			
 			vo = sqlSession.selectOne("board.brd_view", serial);
 			List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
+			sqlSession.commit();
 			
 			vo.setAttList(attList);
 						
@@ -124,27 +125,36 @@ public class BoardDao {
 		return vo;
 	}
 	
-	public void delete(BoardVo vo){
-		BoardVo vo = new BoardVo();
-		vo = sqlSession.selectOne("board.brd_view", serial);
+	public String delete(ReViewVo vo) {
+		String msg = "삭제가 완료되었습니다.";
+		List<ReViewAttVo> delList = null;
 		
-		
-		List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
-		
-		
-		try {
-			
-			if(r > 0) {
+			try {
+				delList = sqlSession.selectList("review.rev_att_list",vo.getSerial());
+				System.out.println("delList size = " + delList.size());
 				
-			}else {
-				
+				int r = sqlSession.delete("review.rev_delete", vo);
+				System.out.println("r = " + r);
+				if(r > 0) {
+					r = sqlSession.delete("review.revAtt_delete", vo.getSerial());
+					if(vo.getAttList() == null || r == vo.getAttList().size()) {
+						sqlSession.commit();
+						for(ReViewAttVo v : delList) {
+							File f = new File(ReViewFileUpload.saveDir + v.getSysAtt());
+							if(f.exists()) f.delete();
+						}
+					}else {
+						throw new Exception();
+					}
+				}else {
+					throw new Exception();
+				}
+			}catch(Exception ex) {
+				sqlSession.rollback();
+				ex.printStackTrace();
+				msg = ex.toString();
 			}
-			
-			
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-			sqlSession.close();
+		return msg;
 	}
 	
 	
