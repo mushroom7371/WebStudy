@@ -126,17 +126,43 @@ public class BoardDao {
 		return msg;
 	}
 	
-	public String repl(BoardVo vo){
-		String msg = "ok..";
+	public String repl(BoardVo vo) {
+		String msg = "OK";
+		int r = 0;
+		int chkCnt = 0;
 		try {
+			int serial = sqlSession.selectOne("board.brd_getSerial");
+			vo.setSerial(serial);
+			r = sqlSession.insert("board.brd_repl", vo);
+			if(r>0) {
+				chkCnt = 0; //첨부파일의 수만큼 실행된 쿼리의 수
+				for(BoardAttVo v : vo.getAttList()) {
+					v.setpSerial(serial);
+					chkCnt += sqlSession.insert("board.brdAtt_insert", v);
+				}
+				if(chkCnt == vo.getAttList().size()) {
+					sqlSession.commit();
+				}else {
+					throw new Exception();
+				}
+			}else {
+				throw new Exception();
+			}
 			
 		}catch(Exception ex) {
 			msg = ex.toString();
+			System.out.println("r=" + r);
+			System.out.println("chkCnt=" + chkCnt);
 			ex.printStackTrace();
+			sqlSession.rollback();
+			
+			for(BoardAttVo delVo : vo.getAttList()) {
+				File f = new File(BoardFileUpload.saveDir + delVo.getSysAtt());
+				if(f.exists()) f.delete();
+			}
 		}
-			sqlSession.close();
-			return msg;
-		
+		sqlSession.close();
+		return msg;
 	}
 	
 	public BoardVo view(int serial) {
