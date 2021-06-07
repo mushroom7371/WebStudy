@@ -79,30 +79,90 @@ public class BoardDao {
 		return msg;
 	}
 	
-	public String update(BoardVo vo){
-		String msg = "ok..";
+	public String update(ReViewVo vo) {
+		String msg = "수정되었습니다.";
+		int r = 0;
+		int chkCnt = 0;
+		
 		try {
-			
+			r = sqlSession.update("review.rev_update", vo);
+			sqlSession.commit();
+
+			if(r < 1) throw new Exception();
+			chkCnt = 0;
+			if(vo.getAttList() != null) {
+				for(ReViewAttVo v : vo.getAttList()) {
+					System.out.println("chkcnt " +chkCnt);
+					v.setpSerial(vo.getSerial());
+					chkCnt += sqlSession.insert("review.revAtt_insert", v);
+					sqlSession.commit();
+				}
+				
+				if(chkCnt == vo.getAttList().size()) {
+					for(ReViewAttVo delVo : vo.getDelList()) {
+						sqlSession.delete("review.revAtt_delete2", delVo.getSysAtt());
+						sqlSession.commit();
+						File f = new File(ReViewFileUpload.saveDir + delVo.getSysAtt());
+						if(f.exists()) f.delete();
+					}
+					sqlSession.close();
+				}else {
+					throw new Exception();
+				}
+			} //첨부파일 유무로 수정
 		}catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println("r=" + r);
+			System.out.println("chkCnt=" + chkCnt);
 			msg = ex.toString();
 			ex.printStackTrace();
-		}finally {
-			sqlSession.close();
-			return msg;
+			sqlSession.rollback();
+			for(ReViewAttVo delVo : vo.getAttList()) {
+				File f = new File(ReViewFileUpload.saveDir + delVo.getSysAtt());
+				if(f.exists()) f.delete();
+			}
 		}
+		sqlSession.close();
+		return msg;
 	}
 	
-	public String repl(BoardVo vo){
-		String msg = "ok..";
+	public String repl(BoardVo vo) {
+		String msg = "OK";
+		int r = 0;
+		int chkCnt = 0;
 		try {
+			int serial = sqlSession.selectOne("board.brd_getSerial");
+			vo.setSerial(serial);
+			r = sqlSession.insert("board.brd_repl", vo);
+			if(r>0) {
+				chkCnt = 0; //첨부파일의 수만큼 실행된 쿼리의 수
+				for(BoardAttVo v : vo.getAttList()) {
+					v.setpSerial(serial);
+					chkCnt += sqlSession.insert("board.brdAtt_insert", v);
+				}
+				if(chkCnt == vo.getAttList().size()) {
+					sqlSession.commit();
+				}else {
+					throw new Exception();
+				}
+			}else {
+				throw new Exception();
+			}
 			
 		}catch(Exception ex) {
 			msg = ex.toString();
+			System.out.println("r=" + r);
+			System.out.println("chkCnt=" + chkCnt);
 			ex.printStackTrace();
+			sqlSession.rollback();
+			
+			for(BoardAttVo delVo : vo.getAttList()) {
+				File f = new File(BoardFileUpload.saveDir + delVo.getSysAtt());
+				if(f.exists()) f.delete();
+			}
 		}
-			sqlSession.close();
-			return msg;
-		
+		sqlSession.close();
+		return msg;
 	}
 	
 	public BoardVo view(int serial) {
@@ -114,6 +174,7 @@ public class BoardDao {
 			
 			vo = sqlSession.selectOne("board.brd_view", serial);
 			List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
+			sqlSession.commit();
 			
 			vo.setAttList(attList);
 						
@@ -124,6 +185,7 @@ public class BoardDao {
 		return vo;
 	}
 	
+<<<<<<< HEAD
 	//첨부파일 가져오기
 	//board 삭제 => boardAtt 삭제 => 파일 삭제
 	public String delete(BoardVo vo){
@@ -159,6 +221,38 @@ public class BoardDao {
 			msg = ex.toString();
 		}
 	return msg;
+=======
+	public String delete(ReViewVo vo) {
+		String msg = "삭제가 완료되었습니다.";
+		List<ReViewAttVo> delList = null;
+		
+			try {
+				delList = sqlSession.selectList("review.rev_att_list",vo.getSerial());
+				System.out.println("delList size = " + delList.size());
+				
+				int r = sqlSession.delete("review.rev_delete", vo);
+				System.out.println("r = " + r);
+				if(r > 0) {
+					r = sqlSession.delete("review.revAtt_delete", vo.getSerial());
+					if(vo.getAttList() == null || r == vo.getAttList().size()) {
+						sqlSession.commit();
+						for(ReViewAttVo v : delList) {
+							File f = new File(ReViewFileUpload.saveDir + v.getSysAtt());
+							if(f.exists()) f.delete();
+						}
+					}else {
+						throw new Exception();
+					}
+				}else {
+					throw new Exception();
+				}
+			}catch(Exception ex) {
+				sqlSession.rollback();
+				ex.printStackTrace();
+				msg = ex.toString();
+			}
+		return msg;
+>>>>>>> a35e029b04d6806155b6704c348d40d511625c41
 	}
 		
 	public static void main(String[] args) {
