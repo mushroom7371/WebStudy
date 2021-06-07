@@ -8,9 +8,6 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <title>게시판 입력</title>
 <script src='./lib/jquery-3.6.0.min.js'></script>
-<script src='./js/board.js'></script>
-<script src='./js/image_preview.js'></script>
-<link rel='stylesheet' type='text/css' href='/WebStudy/css/board.css'>
 </head>
 <body>
 <div id='board'>

@@ -31,7 +31,7 @@
 
 		<div id='image_preview'>
 			<c:forEach var='f' items="${vo.attList}">
-				<a href='upload/${f.sysAtt }' download='${f.oriAtt }''>
+				<a href='upload/${f.sysAtt }' download='${f.oriAtt }'>
 					<img src='./upload/${f.sysAtt }' width='150px' height='180px'/>
 				</a>
 			</c:forEach>
@@ -63,7 +63,6 @@
 </div>
 <script>
 brd.init();
-imageView('attfile', 'attzone');
 </script>
 </body>
 </html>

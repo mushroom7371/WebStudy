@@ -124,32 +124,43 @@ public class BoardDao {
 		return vo;
 	}
 	
-	public void delete(BoardVo vo){
-		BoardVo vo = new BoardVo();
-		vo = sqlSession.selectOne("board.brd_view", serial);
-		
-		
-		List<BoardAttVo> attList = sqlSession.selectList("board.brdAtt_view", serial);
-		
-		
-		try {
+	//첨부파일 가져오기
+	//board 삭제 => boardAtt 삭제 => 파일 삭제
+	public String delete(BoardVo vo){
+		String msg = "OK";
+		List<BoardAttVo> delList = null;
 			
+		try {
+			delList = sqlSession.selectList("board.brd_att_list", vo.getpSerial());
+			
+			int r = sqlSession.delete("board.brd_delete", vo);
+		
 			if(r > 0) {
+				r = sqlSession.delete("board.brdAtt_delete", vo.getSerial());
+				
+				if(r > 0) {
+					sqlSession.commit();
+					for(BoardAttVo v : delList) {
+						File f = new File(BoardFileUpload.saveDir + v.getSysAtt());
+						if(f.exists())
+							f.delete();
+					}
+				}else {
+					throw new Exception();
+				}
 				
 			}else {
-				
+				throw new Exception();
 			}
 			
-			
 		}catch(Exception ex) {
+			sqlSession.rollback();
 			ex.printStackTrace();
+			msg = ex.toString();
 		}
-			sqlSession.close();
+	return msg;
 	}
-	
-	
-	
-	
+		
 	public static void main(String[] args) {
 		new BoardDao();	//메서드가 실행될때 sqlSession이 생성됨
 	}

@@ -51,7 +51,7 @@ public class BoardFileUpload extends HttpServlet {
 		BoardVo bVo = new BoardVo();
 		Page page = new Page();	
 		List<BoardAttVo> attList = new ArrayList<BoardAttVo>(); //첨부파일을 저장하기 위해 선언 및 생성
-		
+
 		Collection<Part> parts = req.getParts();	
 		for(Part p : parts) {
 			if( p.getHeader("Content-Disposition").contains("filename=")) { // file tag

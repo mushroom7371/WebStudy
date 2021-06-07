@@ -33,7 +33,7 @@
 			<input type='file' id='attfile' multiple/>
 		
 		<div id='image_preview'>
-			<div id='attzone'>
+			<div id='attzone'></div>
 		</div>
 		<!-- multiple은 파일 다중 선택 html5에서 추가됨. -->
 		
